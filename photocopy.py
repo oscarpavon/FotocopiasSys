@@ -10,7 +10,7 @@ class PhotocopyManager:
     current_log_file = None 
     def init_logger(self):
         print("Init")
-        if not os.path.isfile("./datos"):
+        if not os.path.isdir("./datos"):
             os.mkdir("./datos")
 
         today = date.today()
