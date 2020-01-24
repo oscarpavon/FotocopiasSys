@@ -44,7 +44,8 @@ class Handler:
         formated_total = "{:,}".format(self.total) + " Gs"
         label_total = builder.get_object("label_total")
         label_total.set_text(formated_total)
-        current_time = datetime.now().strftime("%H:%M:%S") formated_price =  "{:,}".format(price)
+        current_time = datetime.now().strftime("%H:%M:%S")
+        formated_price =  "{:,}".format(price)
         current_log_file.write(current_time + 
                 "                " + formated_price + 
                 "                " + data_type + "\n" )
