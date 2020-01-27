@@ -6,8 +6,11 @@ from datetime import datetime
 import os.path
 import platform, subprocess
 import shutil
+import re
+
 class PhotocopyManager:            
-    current_log_file = None 
+    current_log_file = None
+    total = 0
     def init_logger(self):
         print("Init")
         if not os.path.isdir("./datos"):
@@ -20,6 +23,15 @@ class PhotocopyManager:
         print(filepath)
         if os.path.isfile(filepath):
             print("file exist")
+            readed_file = open("./datos/"+str(today)+".txt","r")
+            lines = readed_file.readlines()
+            position = lines[0].find("TOTAL: ")
+            #print(lines[0][position+7])
+            offset1=position+7
+            offset2=len(lines[0])-3
+            result=lines[0][offset1:offset2]
+            result=int(result.replace(",", ""))
+            self.total=result    
         else:
             print("NO FILE")
             new_file = open("./datos/"+str(today)+".txt","w+")
@@ -30,20 +42,26 @@ class PhotocopyManager:
             new_file.close()
         def print_log(self):
             print("Print log") 
+
+
 class Handler:
     manager = None 
     total = 0
     def __init__(self, manager):
         manager.init_logger()    
         self.manager = manager 
-
+        self.total = manager.total
+        self.update_total_label()
+    def update_total_label(self):
+        formated_total = "{:,}".format(self.total) + " Gs"
+        label_total = builder.get_object("label_total")
+        label_total.set_text(formated_total)
+    
     def print_total(self, price, data_type):
         today = date.today()
         current_log_file = open("./datos/"+str(today)+".txt","a")
         self.total = self.total + price
-        formated_total = "{:,}".format(self.total) + " Gs"
-        label_total = builder.get_object("label_total")
-        label_total.set_text(formated_total)
+        self.update_total_label() 
         current_time = datetime.now().strftime("%H:%M:%S")
         formated_price =  "{:,}".format(price)
         current_log_file.write(current_time + 
@@ -68,7 +86,7 @@ class Handler:
     def button_undo_pressed(self, button):
         print("undo") 
     def button_print_pressed(self, button):
-        print("undo") 
+        print("printing") 
         today = date.today()
         filepath = "./datos/" + str(today) + ".txt"
         from_file = open(filepath) 
@@ -83,6 +101,7 @@ class Handler:
         to_file = open(filepath,mode="w")
         to_file.write(line)
         shutil.copyfileobj(from_file, to_file)
+
     def button_show_data_pressed(self, button):
         today = date.today()
         filepath = "./datos/" + str(today) + ".txt" 
