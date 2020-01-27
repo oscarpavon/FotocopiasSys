@@ -105,13 +105,19 @@ class Handler:
         print("undo") 
 
     def button_print_pressed(self, button):
-        print("printing") 
+        print("printing")
+        today = date.today()
+        if platform.system() == 'Windows':    # Windows
+            filepath = "datos/" + str(today) + ".txt" 
+            relative_path = os.path.abspath(filepath) 
+            os.startfile(relative_path, "print") 
 
     def button_show_data_pressed(self, button):
         today = date.today()
         if platform.system() == 'Windows':    # Windows
-            filepath = "%CD%\datos\\" + str(today) + ".txt" 
-            os.startfile(filepath)
+            filepath = "datos/" + str(today) + ".txt" 
+            relative_path = os.path.abspath(filepath) 
+            os.startfile(relative_path)
         else:
             filepath = "./datos/" + str(today) + ".txt" 
             subprocess.call(('xdg-open', filepath))
@@ -132,5 +138,6 @@ new_button = builder.get_object("button1")
 #new_button.set_label("Hello, World!")
 
 window = builder.get_object("window1")
+window.set_icon_from_file('cat_logo.png')
 window.show_all()
 Gtk.main()
