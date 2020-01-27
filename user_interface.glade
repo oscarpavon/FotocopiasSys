@@ -250,6 +250,22 @@ Judicial</property>
             <property name="y">3</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkButton" id="button_SET">
+            <property name="label" translatable="yes">Certificado 
+SET</property>
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="pressed" handler="button_SET_pressed" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">619</property>
+            <property name="y">503</property>
+          </packing>
+        </child>
       </object>
     </child>
   </object>

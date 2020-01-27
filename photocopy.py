@@ -58,7 +58,20 @@ class Handler:
         formated_total = "{:,}".format(self.total) + " Gs"
         label_total = builder.get_object("label_total")
         label_total.set_text(formated_total)
-    
+    def print_total_to_inform_file(self):
+        today = date.today()
+        filepath = "./datos/" + str(today) + ".txt"
+        from_file = open(filepath) 
+        line = from_file.readline()
+        # make any changes to line here
+        line = "Fecha: "
+        line += str(today) + "                               "
+        formated_total = "{:,}".format(self.total) + " Gs"
+        line += "TOTAL: " + str(formated_total) + "\n"
+        to_file = open(filepath,mode="w")
+        to_file.write(line)
+        shutil.copyfileobj(from_file, to_file)
+
     def print_total(self, price, data_type):
         today = date.today()
         current_log_file = open("./datos/"+str(today)+".txt","a")
@@ -70,9 +83,11 @@ class Handler:
                 "                " + formated_price + 
                 "                " + data_type + "\n" )
         current_log_file.close() 
+        self.print_total_to_inform_file()
 
-    def button_1clicked(self, button):
-        print ("Hello, World")
+    def button_SET_pressed(self, button):
+        self.print_total(8000,"Certificado Contribuyente / No Contributente")
+
     def button_add_ID_count(self, button):
         self.print_total(1000,"Fotocopia de Cedula")
     def button_add_photocopie_count(self, button):
@@ -85,31 +100,20 @@ class Handler:
         self.print_total(2000,"Carpeta")
     def button_plastic_pressed(self, button):
         self.print_total(500,"Folio")
+
     def button_undo_pressed(self, button):
         print("undo") 
+
     def button_print_pressed(self, button):
         print("printing") 
-        today = date.today()
-        filepath = "./datos/" + str(today) + ".txt"
-        from_file = open(filepath) 
-        line = from_file.readline()
-
-        # make any changes to line here
-
-        line = "Fecha: "
-        line += str(today) + "                               "
-        formated_total = "{:,}".format(self.total) + " Gs"
-        line += "TOTAL: " + str(formated_total) + "\n"
-        to_file = open(filepath,mode="w")
-        to_file.write(line)
-        shutil.copyfileobj(from_file, to_file)
 
     def button_show_data_pressed(self, button):
         today = date.today()
-        filepath = "./datos/" + str(today) + ".txt" 
         if platform.system() == 'Windows':    # Windows
+            filepath = "%CD%\datos\\" + str(today) + ".txt" 
             os.startfile(filepath)
-        else:                                   # linux variants
+        else:
+            filepath = "./datos/" + str(today) + ".txt" 
             subprocess.call(('xdg-open', filepath))
     def button_input_mount_pressed(self, button):
         input_mount = builder.get_object("input_value")
