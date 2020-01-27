@@ -28,10 +28,12 @@ class PhotocopyManager:
             position = lines[0].find("TOTAL: ")
             #print(lines[0][position+7])
             offset1=position+7
-            offset2=len(lines[0])-3
+            offset2=len(lines[0])-4
             result=lines[0][offset1:offset2]
-            result=int(result.replace(",", ""))
-            self.total=result    
+            intresult=result.replace(",", "")
+            new_string = ''.join(e for e in intresult if e.isalnum())
+            re.sub('[^A-Za-z0-9]+', '', new_string)
+            self.total=int(new_string)
         else:
             print("NO FILE")
             new_file = open("./datos/"+str(today)+".txt","w+")
