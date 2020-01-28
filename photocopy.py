@@ -8,9 +8,11 @@ import platform, subprocess
 import shutil
 import re
 
+
 class PhotocopyManager:            
     current_log_file = None
     total = 0
+    current_user = "Marta"
     def init_logger(self):
         print("Init")
         if not os.path.isdir("./datos"):
@@ -42,18 +44,27 @@ class PhotocopyManager:
             new_file.write("TOTAL: 0\n")
             new_file.write("Hora                 Cantidad                Tipo\n")
             new_file.close()
-        def print_log(self):
-            print("Print log") 
-
+    def calculate_half_of_total(self, total):
+        print("half")
 
 class Handler:
     manager = None 
     total = 0
+    dialog = None
     def __init__(self, manager):
         manager.init_logger()    
         self.manager = manager 
         self.total = manager.total
         self.update_total_label()
+
+        button1 = builder.get_object("rb_1")
+        button1.connect("toggled",self.on_radio_button_marta_select)
+
+        button2 = builder.get_object("rb_2")
+        button3 = builder.get_object("rb_3")
+        button2.connect("toggled",self.on_radio_button_oski_select)
+        button3.connect("toggled",self.on_radio_button_pancha_select)
+
     def update_total_label(self):
         formated_total = "{:,}".format(self.total) + " Gs"
         label_total = builder.get_object("label_total")
@@ -84,7 +95,9 @@ class Handler:
                 "                " + data_type + "\n" )
         current_log_file.close() 
         self.print_total_to_inform_file()
-
+    ###########################################
+    ############       Buttons      ###########
+    ###########################################
     def button_SET_pressed(self, button):
         self.print_total(8000,"Certificado Contribuyente / No Contributente")
 
@@ -104,6 +117,43 @@ class Handler:
     def button_undo_pressed(self, button):
         print("undo") 
 
+    def button_retire_pressed(self, button):
+        print("retire") 
+        self.dialog = builder.get_object("retire_dialog")
+        response = self.dialog.run()
+    
+    def on_dialog_delete_event(self, dialog, event):
+        dialog.hide()
+        return True
+
+    def button_retire_accept_pressed(self, button):
+        input_retire_mount = builder.get_object("dialog_mount_input")
+        input_value = input_retire_mount.get_text()
+        print(input_value)
+        print("accept")
+        
+        today = date.today()
+        out_log_file= open("./datos/"+str(today)+"_out"+".txt","w+")
+        out_log_file.write(self.manager.current_user+": ") 
+        out_log_file.write(input_value) 
+        out_log_file.write("\n") 
+        out_log_file.close()
+        self.dialog.hide()
+
+    def on_radio_button_select(self, widget , data=None):
+        print("radio button changed")
+    def on_radio_button_marta_select(self,widget):
+        print("marta")
+        self.manager.current_user = "Marta"
+
+    def on_radio_button_pancha_select(self,widget):
+        print("pacha")
+        self.manager.current_user = "Pancha"
+
+    def on_radio_button_oski_select(self,widget):
+        print("oski")
+        self.manager.current_user = "Oski"
+
     def button_print_pressed(self, button):
         print("printing")
         today = date.today()
@@ -111,6 +161,10 @@ class Handler:
             filepath = "datos/" + str(today) + ".txt" 
             relative_path = os.path.abspath(filepath) 
             os.startfile(relative_path, "print") 
+
+    def button_cancel_clicked(self, button):
+        print("cancel")
+        self.dialog.hide()
 
     def button_show_data_pressed(self, button):
         today = date.today()
@@ -134,10 +188,8 @@ new_manager = PhotocopyManager()
 handler = Handler(new_manager)
 builder.connect_signals(handler)
 
-new_button = builder.get_object("button1")
-#new_button.set_label("Hello, World!")
-
 window = builder.get_object("window1")
 window.set_icon_from_file('cat_logo.png')
+window.connect("destroy",Gtk.main_quit)
 window.show_all()
 Gtk.main()
