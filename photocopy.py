@@ -13,6 +13,8 @@ class PhotocopyManager:
     current_log_file = None
     total = 0
     current_user = "Marta"
+    current_print_type = "Blanco y Negro"
+    initial_value_in_the_box = 0
     def init_logger(self):
         print("Init")
         if not os.path.isdir("./datos"):
@@ -41,7 +43,7 @@ class PhotocopyManager:
             new_file = open("./datos/"+str(today)+".txt","w+")
             new_file.write("Fecha: ")
             new_file.write(str(today) + "                                ")
-            new_file.write("TOTAL: 0\n")
+            new_file.write("TOTAL: 0 Gs\n")
             new_file.write("Hora                 Cantidad                Tipo\n")
             new_file.close()
     def calculate_half_of_total(self, total):
@@ -69,6 +71,9 @@ class Handler:
         formated_total = "{:,}".format(self.total) + " Gs"
         label_total = builder.get_object("label_total")
         label_total.set_text(formated_total)
+        label_total_in_the_box = builder.get_object("label_total_in_the_box")
+        label_total_in_the_box.set_text(str(self.manager.initial_value_in_the_box)) 
+
     def print_total_to_inform_file(self):
         today = date.today()
         filepath = "./datos/" + str(today) + ".txt"
@@ -95,9 +100,18 @@ class Handler:
                 "                " + data_type + "\n" )
         current_log_file.close() 
         self.print_total_to_inform_file()
-    ###########################################
+   
+
+   ###########################################
     ############       Buttons      ###########
     ###########################################
+    def button_input_value_in_box_pressed(self , button):
+        input_box = builder.get_object("input_value_in_box")
+        value = input_box.get_text()
+        value = int(value)
+        self.manager.initial_value_in_the_box = value
+        self.update_total_label()
+
     def button_SET_pressed(self, button):
         self.print_total(8000,"Certificado Contribuyente / No Contributente")
 

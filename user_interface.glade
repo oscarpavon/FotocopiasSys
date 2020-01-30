@@ -189,8 +189,8 @@
             <signal name="pressed" handler="button_add_photocopie_count" swapped="no"/>
           </object>
           <packing>
-            <property name="x">256</property>
-            <property name="y">597</property>
+            <property name="x">255</property>
+            <property name="y">508</property>
           </packing>
         </child>
         <child>
@@ -205,8 +205,8 @@ de Cedula</property>
             <signal name="pressed" handler="button_add_ID_count" swapped="no"/>
           </object>
           <packing>
-            <property name="x">258</property>
-            <property name="y">505</property>
+            <property name="x">259</property>
+            <property name="y">410</property>
           </packing>
         </child>
         <child>
@@ -215,7 +215,7 @@ de Cedula</property>
             <property name="height_request">80</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Total:</property>
+            <property name="label" translatable="yes">Total recaudado:</property>
             <attributes>
               <attribute name="font-desc" value="Sans Bold 24"/>
             </attributes>
@@ -237,8 +237,8 @@ de Cedula</property>
             </attributes>
           </object>
           <packing>
-            <property name="x">118</property>
-            <property name="y">83</property>
+            <property name="x">336</property>
+            <property name="y">85</property>
           </packing>
         </child>
         <child>
@@ -267,8 +267,8 @@ de Cedula</property>
             <signal name="pressed" handler="button_curriculum_pressed" swapped="no"/>
           </object>
           <packing>
-            <property name="x">373</property>
-            <property name="y">596</property>
+            <property name="x">376</property>
+            <property name="y">509</property>
           </packing>
         </child>
         <child>
@@ -283,8 +283,8 @@ Judicial</property>
             <signal name="pressed" handler="button_judment_pressed" swapped="no"/>
           </object>
           <packing>
-            <property name="x">369</property>
-            <property name="y">504</property>
+            <property name="x">374</property>
+            <property name="y">409</property>
           </packing>
         </child>
         <child>
@@ -298,8 +298,8 @@ Judicial</property>
             <signal name="pressed" handler="button_folder_pressed" swapped="no"/>
           </object>
           <packing>
-            <property name="x">500</property>
-            <property name="y">502</property>
+            <property name="x">612</property>
+            <property name="y">511</property>
           </packing>
         </child>
         <child>
@@ -313,8 +313,8 @@ Judicial</property>
             <signal name="pressed" handler="button_plastic_pressed" swapped="no"/>
           </object>
           <packing>
-            <property name="x">488</property>
-            <property name="y">596</property>
+            <property name="x">616</property>
+            <property name="y">409</property>
           </packing>
         </child>
         <child>
@@ -340,9 +340,6 @@ Judicial</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">label</property>
           </object>
-          <packing>
-            <property name="y">607</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton" id="button_show_data">
@@ -368,8 +365,8 @@ Judicial</property>
             <property name="input_purpose">number</property>
           </object>
           <packing>
-            <property name="x">368</property>
-            <property name="y">443</property>
+            <property name="x">410</property>
+            <property name="y">349</property>
           </packing>
         </child>
         <child>
@@ -381,8 +378,8 @@ Judicial</property>
             <property name="label" translatable="yes">Ingresar Monto:</property>
           </object>
           <packing>
-            <property name="x">257</property>
-            <property name="y">422</property>
+            <property name="x">287</property>
+            <property name="y">328</property>
           </packing>
         </child>
         <child>
@@ -396,8 +393,8 @@ Judicial</property>
             <signal name="pressed" handler="button_input_mount_pressed" swapped="no"/>
           </object>
           <packing>
-            <property name="x">542</property>
-            <property name="y">431</property>
+            <property name="x">592</property>
+            <property name="y">338</property>
           </packing>
         </child>
         <child>
@@ -420,7 +417,7 @@ Judicial</property>
           <object class="GtkButton" id="button_SET">
             <property name="label" translatable="yes">Certificado 
 SET</property>
-            <property name="width_request">100</property>
+            <property name="width_request">101</property>
             <property name="height_request">80</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
@@ -428,19 +425,23 @@ SET</property>
             <signal name="pressed" handler="button_SET_pressed" swapped="no"/>
           </object>
           <packing>
-            <property name="x">619</property>
-            <property name="y">503</property>
+            <property name="x">500</property>
+            <property name="y">409</property>
           </packing>
         </child>
         <child>
           <object class="GtkImage">
-            <property name="width_request">867</property>
-            <property name="height_request">684</property>
+            <property name="width_request">640</property>
+            <property name="height_request">676</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="opacity">0.080000000000000002</property>
             <property name="pixbuf">cat_logo.png</property>
           </object>
+          <packing>
+            <property name="x">185</property>
+            <property name="y">2</property>
+          </packing>
         </child>
         <child>
           <object class="GtkButton" id="button_retire">
@@ -455,6 +456,137 @@ SET</property>
           <packing>
             <property name="x">924</property>
             <property name="y">312</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">206</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Total en caja:</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold 14"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="y">151</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label_total_in_the_box">
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">0</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold 14"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">184</property>
+            <property name="y">150</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="button_print_service">
+            <property name="label" translatable="yes">Impresion</property>
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+          </object>
+          <packing>
+            <property name="x">490</property>
+            <property name="y">511</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkRadioButton" id="black_white_radio_button">
+                <property name="label" translatable="yes">Blanco y Negro</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="valign">end</property>
+                <property name="active">True</property>
+                <property name="draw_indicator">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkRadioButton" id="color_print_radio_button">
+                <property name="label" translatable="yes">Color</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="active">True</property>
+                <property name="draw_indicator">True</property>
+                <property name="group">black_white_radio_button</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="x">491</property>
+            <property name="y">598</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="input_value_in_box">
+            <property name="width_request">168</property>
+            <property name="height_request">34</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="input_purpose">number</property>
+          </object>
+          <packing>
+            <property name="x">84</property>
+            <property name="y">618</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">92</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Valor Inicial
+para vuelto:</property>
+          </object>
+          <packing>
+            <property name="y">592</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="button_input_value_in_box">
+            <property name="label" translatable="yes">OK</property>
+            <property name="width_request">53</property>
+            <property name="height_request">34</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="clicked" handler="button_input_value_in_box_pressed" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">256</property>
+            <property name="y">618</property>
           </packing>
         </child>
       </object>
