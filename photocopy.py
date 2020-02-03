@@ -100,11 +100,15 @@ class Handler:
                 "                " + data_type + "\n" )
         current_log_file.close() 
         self.print_total_to_inform_file()
-   
+        label_half_total = builder.get_object("label_halft_total")  
+        label_half_total.set_text(str(self.total / 2)) 
 
    ###########################################
     ############       Buttons      ###########
     ###########################################
+    def button_show_extract_clicked(self , button):
+        print("Extracts")
+
     def button_input_value_in_box_pressed(self , button):
         input_box = builder.get_object("input_value_in_box")
         value = input_box.get_text()
