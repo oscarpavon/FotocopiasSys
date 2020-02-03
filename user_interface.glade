@@ -471,7 +471,7 @@ SET</property>
             </attributes>
           </object>
           <packing>
-            <property name="y">177</property>
+            <property name="y">196</property>
           </packing>
         </child>
         <child>
@@ -487,7 +487,7 @@ SET</property>
           </object>
           <packing>
             <property name="x">177</property>
-            <property name="y">182</property>
+            <property name="y">197</property>
           </packing>
         </child>
         <child>
@@ -498,6 +498,7 @@ SET</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <signal name="clicked" handler="button_print_service_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="x">490</property>
@@ -593,7 +594,7 @@ para vuelto:</property>
         <child>
           <object class="GtkButton" id="button_show_extract">
             <property name="label" translatable="yes">Mostrar
-Extactos</property>
+Extractos</property>
             <property name="width_request">123</property>
             <property name="height_request">80</property>
             <property name="visible">True</property>
@@ -635,7 +636,7 @@ Extactos</property>
           </object>
           <packing>
             <property name="x">177</property>
-            <property name="y">144</property>
+            <property name="y">135</property>
           </packing>
         </child>
       </object>

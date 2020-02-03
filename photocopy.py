@@ -24,9 +24,7 @@ class PhotocopyManager:
         label_date = builder.get_object("label_date")
         label_date.set_text(str(today))
         filepath = "./datos/" + str(today) + ".txt" 
-        print(filepath)
         if os.path.isfile(filepath):
-            print("file exist")
             readed_file = open("./datos/"+str(today)+".txt","r")
             lines = readed_file.readlines()
             position = lines[0].find("TOTAL: ")
@@ -39,15 +37,15 @@ class PhotocopyManager:
             re.sub('[^A-Za-z0-9]+', '', new_string)
             self.total=int(new_string)
         else:
-            print("NO FILE")
             new_file = open("./datos/"+str(today)+".txt","w+")
             new_file.write("Fecha: ")
             new_file.write(str(today) + "                                ")
             new_file.write("TOTAL: 0 Gs\n")
             new_file.write("Hora                 Cantidad                Tipo\n")
             new_file.close()
-    def calculate_half_of_total(self, total):
-        print("half")
+def formated_namber(value):
+    formated = "{:,}".format(value) + " Gs"
+    return formated 
 
 class Handler:
     manager = None 
@@ -58,7 +56,7 @@ class Handler:
         self.manager = manager 
         self.total = manager.total
         self.update_total_label()
-
+        self.update_half_total_label()
         button1 = builder.get_object("rb_1")
         button1.connect("toggled",self.on_radio_button_marta_select)
 
@@ -87,6 +85,10 @@ class Handler:
         to_file = open(filepath,mode="w")
         to_file.write(line)
         shutil.copyfileobj(from_file, to_file)
+    
+    def update_half_total_label(self):
+        label_half_total = builder.get_object("label_halft_total")  
+        label_half_total.set_text(formated_namber(self.total/2)) 
 
     def print_total(self, price, data_type):
         today = date.today()
@@ -100,14 +102,17 @@ class Handler:
                 "                " + data_type + "\n" )
         current_log_file.close() 
         self.print_total_to_inform_file()
-        label_half_total = builder.get_object("label_halft_total")  
-        label_half_total.set_text(str(self.total / 2)) 
 
-   ###########################################
+    ###########################################
     ############       Buttons      ###########
     ###########################################
     def button_show_extract_clicked(self , button):
         print("Extracts")
+
+    def button_print_service_clicked(selft, button):
+        print("Print service")
+        black = True
+        
 
     def button_input_value_in_box_pressed(self , button):
         input_box = builder.get_object("input_value_in_box")
