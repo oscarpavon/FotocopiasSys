@@ -8,13 +8,25 @@ import platform, subprocess
 import shutil
 import re
 
+today = date.today()
+
+def formated_namber(value):
+    formated = "{:,}".format(value) + " Gs"
+    return formated 
+
+def today_file(read_format):
+    today = date.today()
+    filepath = "./datos/" + str(today) + ".txt"
+    from_file = open(filepath,read_format)
+    return from_file
 
 class PhotocopyManager:            
     current_log_file = None
     total = 0
     current_user = "Marta"
-    current_print_type = "Blanco y Negro"
+    current_print_type = "black_and_white"
     initial_value_in_the_box = 0
+    previous_added_price = 0
     def init_logger(self):
         print("Init")
         if not os.path.isdir("./datos"):
@@ -43,9 +55,7 @@ class PhotocopyManager:
             new_file.write("TOTAL: 0 Gs\n")
             new_file.write("Hora                 Cantidad                Tipo\n")
             new_file.close()
-def formated_namber(value):
-    formated = "{:,}".format(value) + " Gs"
-    return formated 
+
 
 class Handler:
     manager = None 
@@ -65,33 +75,40 @@ class Handler:
         button2.connect("toggled",self.on_radio_button_oski_select)
         button3.connect("toggled",self.on_radio_button_pancha_select)
 
-    def update_total_label(self):
-        formated_total = "{:,}".format(self.total) + " Gs"
-        label_total = builder.get_object("label_total")
-        label_total.set_text(formated_total)
-        label_total_in_the_box = builder.get_object("label_total_in_the_box")
-        label_total_in_the_box.set_text(str(self.manager.initial_value_in_the_box)) 
+        print_black_and_white_radio = builder.get_object("black_white_radio_button")
+        print_color_radio = builder.get_object("color_print_radio_button")
+        print_black_and_white_radio.connect("toggled",self.radio_button_black_white_pressed)
+        print_color_radio.connect("toggled",self.radio_button_color_pressed)
 
+
+    def radio_button_black_white_pressed(self,button):
+        self.manager.current_print_type = "black_and_white"
+    def radio_button_color_pressed(self, button):
+        self.manager.current_print_type = "color"
+
+    def update_total_label(self):
+        label_total = builder.get_object("label_total")
+        label_total.set_text(formated_namber(self.total))
+        label_total_in_the_box = builder.get_object("label_total_in_the_box")
+        label_total_in_the_box.set_text(formated_namber(self.manager.initial_value_in_the_box + self.total)) 
+        self.update_half_total_label()
     def print_total_to_inform_file(self):
-        today = date.today()
-        filepath = "./datos/" + str(today) + ".txt"
-        from_file = open(filepath) 
+        from_file = today_file("r") 
         line = from_file.readline()
         # make any changes to line here
         line = "Fecha: "
         line += str(today) + "                               "
-        formated_total = "{:,}".format(self.total) + " Gs"
-        line += "TOTAL: " + str(formated_total) + "\n"
-        to_file = open(filepath,mode="w")
+        line += "TOTAL: " + formated_namber(self.total) + "\n"
+        to_file = today_file("w") 
         to_file.write(line)
         shutil.copyfileobj(from_file, to_file)
+        
     
     def update_half_total_label(self):
         label_half_total = builder.get_object("label_halft_total")  
         label_half_total.set_text(formated_namber(self.total/2)) 
 
     def print_total(self, price, data_type):
-        today = date.today()
         current_log_file = open("./datos/"+str(today)+".txt","a")
         self.total = self.total + price
         self.update_total_label() 
@@ -102,6 +119,7 @@ class Handler:
                 "                " + data_type + "\n" )
         current_log_file.close() 
         self.print_total_to_inform_file()
+        self.manager.previous_added_price = price
 
     ###########################################
     ############       Buttons      ###########
@@ -109,10 +127,13 @@ class Handler:
     def button_show_extract_clicked(self , button):
         print("Extracts")
 
-    def button_print_service_clicked(selft, button):
+    def button_print_service_clicked(self, button):
         print("Print service")
         black = True
-        
+        if(self.manager.current_print_type == "black_and_white"):
+            self.print_total(1000,"Impresion en Blanco y Negro")
+        elif (self.manager.current_print_type == "color"):
+            self.print_total(2500,"Impresion a Color")
 
     def button_input_value_in_box_pressed(self , button):
         input_box = builder.get_object("input_value_in_box")
@@ -139,7 +160,16 @@ class Handler:
 
     def button_undo_pressed(self, button):
         print("undo") 
-
+        opend_file = today_file("r")
+        lines = opend_file.readlines()
+        opend_file.close()
+        new_file = today_file("w")
+        for line in range(0,(len(lines)-1)):
+            new_file.write(lines[line])
+        new_file.close()
+        self.total -= self.manager.previous_added_price
+        self.print_total_to_inform_file()
+        self.update_total_label()
     def button_retire_pressed(self, button):
         print("retire") 
         self.dialog = builder.get_object("retire_dialog")
