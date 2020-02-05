@@ -152,7 +152,7 @@ class Handler:
     def button_curriculum_pressed(self, button):
         self.print_total(10000,"Curriculum")
     def button_judment_pressed(self, button):
-        self.print_total(7000,"Antecedente Judicial")
+        self.print_total(9000,"Antecedente Judicial")
     def button_folder_pressed(self, button):
         self.print_total(2000,"Carpeta")
     def button_plastic_pressed(self, button):
